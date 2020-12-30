@@ -16,7 +16,9 @@ dependencies:
   clock: ^1.0.1
   collection: ^1.14.13
   crypto: ^2.1.5
-  pointycastle: ^2.0.0
+  pointycastle:
+    git:
+      url: https://github.com/Danielherresan/pc-dart
 
 dev_dependencies:
   test: ^1.15.4
