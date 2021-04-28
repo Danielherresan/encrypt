@@ -8,17 +8,18 @@ executables:
   secure-random:
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  args: ^1.6.0
-  asn1lib: ^0.8.1
-  clock: ^1.0.1
-  collection: ^1.14.13
-  crypto: ^2.1.5
+  args: ^2.1.0
+  asn1lib: ^1.0.0
+  clock: ^1.1.0
+  collection: ^1.15.0
+  crypto: ^3.0.1
   pointycastle:
     git:
       url: https://github.com/Danielherresan/pc-dart
+      ref: feature/null-safety
 
 dev_dependencies:
-  test: ^1.15.4
+  test: ^1.17.2

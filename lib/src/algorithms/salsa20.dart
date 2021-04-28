@@ -9,19 +9,19 @@ class Salsa20 implements Algorithm {
   Salsa20(this.key);
 
   @override
-  Encrypted encrypt(Uint8List bytes, {IV iv}) {
+  Encrypted encrypt(Uint8List bytes, {IV? iv}) {
     _cipher
       ..reset()
-      ..init(true, _buildParams(iv));
+      ..init(true, _buildParams(iv!));
 
     return Encrypted(_cipher.process(bytes));
   }
 
   @override
-  Uint8List decrypt(Encrypted encrypted, {IV iv}) {
+  Uint8List decrypt(Encrypted encrypted, {IV? iv}) {
     _cipher
       ..reset()
-      ..init(false, _buildParams(iv));
+      ..init(false, _buildParams(iv!));
 
     return _cipher.process(encrypted.bytes);
   }
