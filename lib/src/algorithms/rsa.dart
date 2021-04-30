@@ -2,17 +2,18 @@ part of encrypt;
 
 // Abstract class for encryption and signing.
 abstract class AbstractRSA {
-  final RSAPublicKey publicKey;
-  final RSAPrivateKey privateKey;
+  final RSAPublicKey? publicKey;
+  final RSAPrivateKey? privateKey;
   final PublicKeyParameter<RSAPublicKey> _publicKeyParams;
   final PrivateKeyParameter<RSAPrivateKey> _privateKeyParams;
   final AsymmetricBlockCipher _cipher;
 
   AbstractRSA({
-    required this.publicKey,
-    required this.privateKey,
+    this.publicKey,
+    this.privateKey,
     RSAEncoding encoding = RSAEncoding.PKCS1,
-  })  : this._publicKeyParams = PublicKeyParameter(publicKey),
+  })  : assert(privateKey != null || publicKey != null),
+        this._publicKeyParams = PublicKeyParameter(publicKey),
         this._privateKeyParams = PrivateKeyParameter(privateKey),
         this._cipher = encoding == RSAEncoding.OAEP
             ? OAEPEncoding(RSAEngine())

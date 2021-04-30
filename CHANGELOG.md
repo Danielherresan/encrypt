@@ -1,3 +1,8 @@
+# 4.1.1
+
+- AbstractRSA requires at least one parameter of type RSAPublicKey or RSAPrivateKey
+- null-safety
+
 # 4.1.0
 
 - PointyCastle v2
