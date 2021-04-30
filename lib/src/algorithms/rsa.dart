@@ -23,10 +23,11 @@ abstract class AbstractRSA {
 /// Wraps the RSA Engine Algorithm.
 class RSA extends AbstractRSA implements Algorithm {
   RSA(
-      {required RSAPublicKey publicKey,
-      required RSAPrivateKey privateKey,
+      {RSAPublicKey? publicKey,
+      RSAPrivateKey? privateKey,
       RSAEncoding encoding = RSAEncoding.PKCS1})
-      : super(publicKey: publicKey, privateKey: privateKey, encoding: encoding);
+      : assert(privateKey != null || publicKey != null),
+        super(publicKey: publicKey, privateKey: privateKey, encoding: encoding);
 
   @override
   Encrypted encrypt(Uint8List bytes, {IV? iv}) {
