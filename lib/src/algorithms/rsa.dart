@@ -4,8 +4,8 @@ part of encrypt;
 abstract class AbstractRSA {
   final RSAPublicKey? publicKey;
   final RSAPrivateKey? privateKey;
-  final PublicKeyParameter<RSAPublicKey> _publicKeyParams;
-  final PrivateKeyParameter<RSAPrivateKey> _privateKeyParams;
+  final PublicKeyParameter<RSAPublicKey>? _publicKeyParams;
+  final PrivateKeyParameter<RSAPrivateKey>? _privateKeyParams;
   final AsymmetricBlockCipher _cipher;
 
   AbstractRSA({
@@ -13,8 +13,10 @@ abstract class AbstractRSA {
     this.privateKey,
     RSAEncoding encoding = RSAEncoding.PKCS1,
   })  : assert(privateKey != null || publicKey != null),
-        this._publicKeyParams = PublicKeyParameter(publicKey),
-        this._privateKeyParams = PrivateKeyParameter(privateKey),
+        this._publicKeyParams =
+            publicKey != null ? PublicKeyParameter(publicKey) : null,
+        this._privateKeyParams =
+            privateKey != null ? PrivateKeyParameter(privateKey) : null,
         this._cipher = encoding == RSAEncoding.OAEP
             ? OAEPEncoding(RSAEngine())
             : PKCS1Encoding(RSAEngine());
@@ -33,7 +35,7 @@ class RSA extends AbstractRSA implements Algorithm {
   Encrypted encrypt(Uint8List bytes, {IV? iv}) {
     _cipher
       ..reset()
-      ..init(true, _publicKeyParams);
+      ..init(true, _publicKeyParams!);
 
     return Encrypted(_cipher.process(bytes));
   }
@@ -42,7 +44,7 @@ class RSA extends AbstractRSA implements Algorithm {
   Uint8List decrypt(Encrypted encrypted, {IV? iv}) {
     _cipher
       ..reset()
-      ..init(false, _privateKeyParams);
+      ..init(false, _privateKeyParams!);
 
     return _cipher.process(encrypted.bytes);
   }
@@ -70,7 +72,7 @@ class RSASigner extends AbstractRSA implements SignerAlgorithm {
 
     _cipher
       ..reset()
-      ..init(true, _privateKeyParams);
+      ..init(true, _privateKeyParams!);
 
     return Encrypted(_cipher.process(_encode(hash)));
   }
@@ -86,7 +88,7 @@ class RSASigner extends AbstractRSA implements SignerAlgorithm {
 
     _cipher
       ..reset()
-      ..init(false, _publicKeyParams);
+      ..init(false, _publicKeyParams!);
 
     var _signature = Uint8List(_cipher.outputBlockSize);
 
